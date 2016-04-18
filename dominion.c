@@ -766,7 +766,23 @@ int gHallCard(int currentPlayer, struct gameState *state, int handPos){
 
 
 }
-
+int embargoCard(struct gameState *state, int currentPlayer, int handPos, int choice1){
+      //+2 Coins
+      state->coins = state->coins + 2;
+			
+      //see if selected pile is in play
+      if ( state->supplyCount[choice1] == -1 )
+	{
+	  return -1;
+	}
+			
+      //add embargo token to selected supply pile
+      state->embargoTokens[choice1]++;
+			
+      //trash card
+      discardCard(handPos, currentPlayer, state, 1);		
+      return 0;
+}
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
@@ -1281,7 +1297,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
 		
     case embargo: 
-      //+2 Coins
+ /*     //+2 Coins
       state->coins = state->coins + 2;
 			
       //see if selected pile is in play
@@ -1296,7 +1312,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //trash card
       discardCard(handPos, currentPlayer, state, 1);		
       return 0;
-		
+		*/
+     embargoCard(state, currentPlayer, handPos,choice1);
+    return 0; 
+
     case outpost:
       //set outpost flag
       state->outpostPlayed++;
