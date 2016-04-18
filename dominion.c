@@ -761,7 +761,7 @@ int gHallCard(int currentPlayer, struct gameState *state, int handPos){
       state->numActions++;
 			
       //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
+      discardCard(handPos, currentPlayer, state, 1);
       return 0;
 
 
@@ -773,7 +773,7 @@ int embargoCard(struct gameState *state, int currentPlayer, int handPos, int cho
       //see if selected pile is in play
       if ( state->supplyCount[choice1] == -1 )
 	{
-	  return -1;
+	  return 0;
 	}
 			
       //add embargo token to selected supply pile
