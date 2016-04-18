@@ -130,5 +130,7 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 
 int councilCard(int currentPlayer, struct gameState *state, int handPos);
 int smithyCard(int currentPlayer, struct gameState *state, int handPos);
+int villageCard(int currentPlayer, struct gameState *state, int handPos);
+
 
 #endif

@@ -711,6 +711,33 @@ int smithyCard(int currentPlayer, struct gameState *state, int handPos){
       return 0;
 
 }
+int villageCard(int currentPlayer, struct gameState *state, int handPos){
+   int i;
+  int j;
+  int k;
+  int x;
+  int index;
+  int nextPlayer = currentPlayer + 1;
+
+  int tributeRevealedCards[2] = {-1, -1};
+  int temphand[MAX_HAND];// moved above the if statement
+  int drawntreasure=0;
+  int cardDrawn;
+  int z = 0;// this is the counter for the temp hand
+  if (nextPlayer > (state->numPlayers - 1)){
+    nextPlayer = 0;
+  }//+1 Card
+      drawCard(currentPlayer, state);
+			
+      //+2 Actions
+      state->numActions = state->numActions + 2;
+			
+      //discard played card from hand
+      discardCard(handPos, currentPlayer, state, 0);
+      return 0;
+}
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
   int i;
@@ -916,7 +943,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
 
     case village:
-      //+1 Card
+      /*
+	//+1 Card
       drawCard(currentPlayer, state);
 			
       //+2 Actions
@@ -925,7 +953,11 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard played card from hand
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
-		
+	*/
+	villageCard(currentPlayer,state,handPos);
+	return 0;
+	
+
     case baron:
       state->numBuys++;//Increase buys by 1!
       if (choice1 > 0){//Boolean true or going to discard an estate
