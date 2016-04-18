@@ -129,4 +129,6 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
    1, others to 0 */
 
 int councilCard(int currentPlayer, struct gameState *state, int handPos);
+int smithyCard(int currentPlayer, struct gameState *state, int handPos);
+
 #endif
