@@ -737,6 +737,36 @@ int villageCard(int currentPlayer, struct gameState *state, int handPos){
       return 0;
 }
 
+int gHallCard(int currentPlayer, struct gameState *state, int handPos){
+   int i;
+  int j;
+  int k;
+  int x;
+  int index;
+  int nextPlayer = currentPlayer + 1;
+
+  int tributeRevealedCards[2] = {-1, -1};
+  int temphand[MAX_HAND];// moved above the if statement
+  int drawntreasure=0;
+  int cardDrawn;
+  int z = 0;// this is the counter for the temp hand
+  if (nextPlayer > (state->numPlayers - 1)){
+    nextPlayer = 0;
+  }
+   
+	//+1 Card
+      drawCard(currentPlayer, state);
+			
+      //+1 Actions
+      state->numActions++;
+			
+      //discard card from hand
+      discardCard(handPos, currentPlayer, state, 0);
+      return 0;
+
+
+}
+
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
@@ -1010,7 +1040,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case great_hall:
-      //+1 Card
+/*      //+1 Card
       drawCard(currentPlayer, state);
 			
       //+1 Actions
@@ -1019,7 +1049,11 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
-		
+*/
+
+	gHallCard(currentPlayer,state,handPos);
+	return 0;
+
     case minion:
       //+1 action
       state->numActions++;
