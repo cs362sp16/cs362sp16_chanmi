@@ -1,0 +1,12 @@
+Changelog: Dominion
+
+
+1----------------------
+
+Created 5 functions for the cards: council room, smithy, village, great hall, and embargo.
+
+This was done by copying their functionality in the cases into the functions then copying cardEffect's 
+
+variables and adding any needed parameters.
+
+Moved the functions to their respective cases in the function cardEffect().
