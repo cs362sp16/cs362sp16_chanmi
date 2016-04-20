@@ -8,5 +8,14 @@ Created 5 functions for the cards: council room, smithy, village, great hall, an
 This was done by copying their functionality in the cases into the functions then copying cardEffect's 
 
 variables and adding any needed parameters.
-
+councilCard: Takes currentPlayer, gameState, and hand position. I also moved most of the variable definitions 
+	in cardEffect into this function in case it used them.
+smithyCard: Takes currentPlayer, gameState, and hand position. I also moved most of the variable definitions 
+	in cardEffect into this function in case it used them.
+villageCard: Takes currentPlayer, gameState, and hand position. I also moved most of the variable definitions 
+	in cardEffect into this function in case it used them.
+gHallCard: Takes currentPlayer, gameState, and hand position. I also moved most of the variable definitions 
+	in cardEffect into this function in case it used them.
+embargoCard: Takes currentPlayer, gameState, choice1, and hand position. I also moved most of the variable definitions 
+	in cardEffect into this function in case it used them.
 Moved the functions to their respective cases in the function cardEffect().
