@@ -1,0 +1,5 @@
+Lines executed:32.20% of 587
+Not that great of coverage, but I tried to do small increments of testing rather than writing tons of code.
+Each unit test and card test gave me around 2-3% coverage.
+I only encountered one bug with the village card, its details are in the other text document.
+I mainly tested by reusing Alex's assert he made in class and only modified it when a special issue came up.
