@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 		seed = atoi(argv[1]);
 	}
 	else{
-		seed = rand();
+		seed = 42;
 	}
 	
 	for(i = 0; i < RUNS; i++){
