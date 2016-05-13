@@ -30,7 +30,7 @@ adventests: dominion.o rngs.o interface.o
 	./randomtestadventurer 42 >> tests.out
 	gcov dominion.c >> tests.out
 	
-tests: dominion.o rngs.o interface.o
+1tests: dominion.o rngs.o interface.o
 	gcc -o randomtestcard randomtestcard1.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	./randomtestcard 42 >> tests.out
 	gcov -f dominion.c | less >> tests.out	
