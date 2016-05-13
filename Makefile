@@ -24,6 +24,16 @@ unittest:
 	gcc -o card2 cardtest2.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	gcc -o card3 cardtest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	gcc -o card4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	
+adventests: dominion.o rngs.o
+	gcc -o randomtestadventurer randomtestadventurer.c -g dominion.o rngs.o $(CFLAGS)
+	./randomtestadventurer 42 >> tests.out
+	gcov dominion.c >> tests.out
+	
+tests: dominion.o rngs.o
+	gcc -o randomtestcard randomtestcard1.c -g dominion.o rngs.o $(CFLAGS)
+	./randomtestcard >> tests.out
+	gcov -f dominion.c | less >> tests.out	
 		
 unittestresults.out: unittest playdom
 	rm -rf unittestresults.out
