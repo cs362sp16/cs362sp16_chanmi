@@ -25,20 +25,21 @@ unittest:
 	gcc -o card3 cardtest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	gcc -o card4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	
-adventests: dominion.o rngs.o interface.o
+	
+randomtests: dominion.o rngs.o interface.o
 	gcc -o randomtestadventurer randomtestadventurer.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	./randomtestadventurer 42 >> tests.out
-	gcov -f dominion.c >> tests.out
-	
-1tests: dominion.o rngs.o interface.o
-	gcc -o randomtestcard randomtestcard1.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	./randomtestcard 42 >> tests.out
-	gcov -f dominion.c | less >> tests.out	
-	
-tests: dominion.o rngs.o interface.o
+	./randomtestadventurer 42 >> randomtestadventurer.out
+	gcov -f dominion.c | less >> randomtestadventurer.out
+
+	echo "SMITHY TEST CARD" >> randomtestcard1.out
+	gcc -o randomtestcard1 randomtestcard1.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	./randomtestcard1 42 >> randomtestcard1.out
+	gcov -f dominion.c | less >> randomtestcard1.out	
+
+	echo "VILLAGE TEST CARD" >> randomtestcard2.out
 	gcc -o randomtestcard2 randomtestcard2.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	./randomtestcard2 42 >> tests.out
-	gcov -f dominion.c | less >> tests.out		
+	./randomtestcard2 42 >> randomtestcard2.out
+	gcov -f dominion.c | less >> randomtestcard2.out		
 		
 unittestresults.out: unittest playdom
 	rm -rf unittestresults.out

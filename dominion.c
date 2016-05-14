@@ -34,8 +34,7 @@ int* kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7,
   return k;
 }
 
-int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
-		   struct gameState *state) {
+int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state) {
 
   int i;
   int j;
@@ -696,9 +695,6 @@ int smithyCard(int currentPlayer, struct gameState *state, int handPos){
   int drawntreasure=0;
   int cardDrawn;
   int z = 0;// this is the counter for the temp hand
-  if (nextPlayer > (state->numPlayers - 1)){
-    nextPlayer = 0;
-  }
  
 	//+3 Cards
       for (i = 0; i < 3; i++)
@@ -712,7 +708,7 @@ int smithyCard(int currentPlayer, struct gameState *state, int handPos){
 
 }
 int villageCard(int currentPlayer, struct gameState *state, int handPos){
-   int i;
+  int i;
   int j;
   int k;
   int x;
@@ -724,9 +720,8 @@ int villageCard(int currentPlayer, struct gameState *state, int handPos){
   int drawntreasure=0;
   int cardDrawn;
   int z = 0;// this is the counter for the temp hand
-  if (nextPlayer > (state->numPlayers - 1)){
-    nextPlayer = 0;
-  }//+1 Card
+  
+	//+1 Card
       drawCard(currentPlayer, state);
 			
       //+2 Actions
@@ -738,7 +733,7 @@ int villageCard(int currentPlayer, struct gameState *state, int handPos){
 }
 
 int gHallCard(int currentPlayer, struct gameState *state, int handPos){
-   int i;
+  int i;
   int j;
   int k;
   int x;
@@ -750,9 +745,6 @@ int gHallCard(int currentPlayer, struct gameState *state, int handPos){
   int drawntreasure=0;
   int cardDrawn;
   int z = 0;// this is the counter for the temp hand
-  if (nextPlayer > (state->numPlayers - 1)){
-    nextPlayer = 0;
-  }
    
 	//+1 Card
       drawCard(currentPlayer, state);

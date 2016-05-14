@@ -1,0 +1,9 @@
+I started by creating simple random testers that just played the specified card but didn't do much else. They would get decent coverage but lacked in actual bug catching.
+I then improved them by adding assert cases and actually simulating play and asserting factors that would change like treasure count and hand count.
+Adventurer covered 26% of total dominion and 78% of playCard. It looks like the adventurer case was covered for 100%. It only had an assert pop when treasure returned -1, meaning it couldn't play, probably because there weren't 2 treasures in the deck.
+Village and Smithy both got 100% coverage. In smithy I just tested for the hand count to have increased due to village. I didn't cover deck count or discard count because I assumed playCard had functionality that would cover that.
+In village I had more cases that included checking the return value of playCard, checking had and action counts before compared to after. I also didn't check deck count or discard count for the reasons above.
+I had 50 runs for both these cards, and they could be increased if needed. They took half a second to complete, and I didn't want to make them too high due to how slow my computer tends to be.
+I had much higher coverage than my unit tests and I could test faults easier because having a look run it makes it easier to hit a fault. I would compare it to a shotgun vs a handgun.
+However unit tests can be much more accurate and specific and are beter suited for covering edge cases that may be much harder to find with random testing.
+Random testing had higher test coverage, but I having "better" fault detection is a subjective thing that isn't set in stone.

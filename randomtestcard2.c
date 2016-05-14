@@ -6,10 +6,9 @@
 #include "dominion_helpers.h"
 
 #define RUNS 50
+//VILLAGE CARD
 
 int failed = 0;
-
-//SMITHY CARD
 
 int myassert(int b,int a,char* msg, int i) {
 	if (b != a) {
@@ -26,7 +25,7 @@ void checkasserts() {
 } 
 
 int main(int argc, char* argv[]) {
-	int seed, r;
+	int seed, r, acts;
 	int i, j, beforeHand;
 	time_t t;
 	int players = rand() % MAX_PLAYERS + 1;
@@ -47,23 +46,21 @@ int main(int argc, char* argv[]) {
 
 		//loop players
 		for(j = 0; j < players; j++){
-			state.handCount[j] = rand() % MAX_HAND + 1;
-			state.deckCount[j] = rand() % MAX_DECK + 1;
+			state.handCount[j] = rand() % MAX_HAND;
+			state.deckCount[j] = rand() % MAX_DECK;
 			
 			beforeHand = numHandCards(&state);
+			acts = state.numActions;
 			
-			state.hand[j][0] = smithy;
+			state.hand[j][0] = village;	//add village card to hand
+			r = playCard(0,0,0,0,&state);	//return value
 			
-				
-			r = playCard(0,0,0,0,&state);		//play card, make sure variables are defined before here.
 			
-		
-			myassert(numHandCards(&state),beforeHand+2,"didnt add 3 cards",i);
+			myassert(numHandCards(&state),beforeHand,"didnt add one card",i);	//played one card and got one, so it should be equal
+			myassert(state.numActions,acts+1,"didnt add one action",i);
 			myassert(r, 0, "return value fail", i);
 			
 			endTurn(&state);
-			
-			
 			
 		}
 	}
