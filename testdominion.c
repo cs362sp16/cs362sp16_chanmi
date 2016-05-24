@@ -2,14 +2,11 @@
 #include "stdlib.h"
 #include "stdio.h"
 
-#define RUNS 1
-
-//checkpoint randoKings
+#define RUNS 2
 
 int main(int argc, char** argv){
-	int seed, i, j, returnVal;
+	int seed, i, j, returnVal,u;
 	
-	int count = 0;
 	int try;
 	int unique;
 	
@@ -18,10 +15,11 @@ int main(int argc, char** argv){
 	else
 	seed = 42;
 	srand(seed);
-	
-	//checkpoint seed
+	newGame();
+	kingdomCards(0,0,0,0,0,0,0,0,0,0);
 
 	for (j = 0; j < RUNS; j++){
+		int count = 0;
 		int totalPlayers = rand() % 3 + 2;
 		int k[10];
 		for (i = 0; i < 10; i++)
@@ -31,8 +29,8 @@ int main(int argc, char** argv){
 		while (count < 10){
 			unique = 0;
 			try = (rand() % (treasure_map - adventurer)) + adventurer;
-			for (i = 0; i < 10; i++){
-				if (k[i] == try)
+			for (u = 0; u < 10; u++){
+				if (k[u] == try)
 				unique = 1;
 			}
 			if (unique != 1){
