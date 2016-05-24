@@ -8,12 +8,18 @@ dominion.o: dominion.h dominion.c rngs.o
 
 playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
-
+	
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
 player: player.c interface.o
-	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
+	gcc -o player player.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	
+test:  dominion.o rngs.o  player.c interface.o
+	rm -f testdom.out
+	gcc -o testdom testdominion.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	./testdom 42 >> testdom.out
+	gcov -f dominion.c | less >> testdom.out
 	
 unittest:
 	gcc -o test1 unittest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
@@ -23,8 +29,7 @@ unittest:
 	gcc -o card1 cardtest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	gcc -o card2 cardtest2.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	gcc -o card3 cardtest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	gcc -o card4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	
+	gcc -o card4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)	
 	
 randomtests: dominion.o rngs.o interface.o
 	gcc -o randomtestadventurer randomtestadventurer.c -g dominion.o rngs.o interface.o $(CFLAGS)
