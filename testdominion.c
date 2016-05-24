@@ -1,163 +1,168 @@
 ﻿#include "dominion.h"
-#include "rngs.h"
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <time.h>
+#include "stdlib.h"
+#include "stdio.h"
 
-#define MAX_TESTS 1
+#define RUNS 1
 
-int containsCard(int *array, int card) {
-	int i;
-	for(i = 0; i < 10; i++) {
-		if (array[i] == card)
-		return 1;
-	}
-	return 0;
-}
+//checkpoint randoKings
 
-int main() {
-	printf("Running testdominion.c\n");
+int main(int argc, char** argv){
+	int seed, i, j, returnVal;
+	
+	int count = 0;
+	int try;
+	int unique;
+	
+	if(argc > 2)
+	seed = atoi(argv[1]);
+	else
+	seed = 42;
+	srand(seed);
+	
+	//checkpoint seed
 
-	srand(42);
-	int j;
-	for(j = 0; j < MAX_TESTS; j++) {
-
-		int amountKingdomCards;
-		int kingdomCards[10];
-		int i;
-		for(i = 0; i < amountKingdomCards; i++) {
-			kingdomCards[i] = -1;
+	for (j = 0; j < RUNS; j++){
+		int totalPlayers = rand() % 3 + 2;
+		int k[10];
+		for (i = 0; i < 10; i++)
+		k[i] = 0;
+		
+		//pick 10 random and unique cards
+		while (count < 10){
+			unique = 0;
+			try = (rand() % (treasure_map - adventurer)) + adventurer;
+			for (i = 0; i < 10; i++){
+				if (k[i] == try)
+				unique = 1;
+			}
+			if (unique != 1){
+				k[count] = try;
+				count++;
+			}
 		}
 
-		//get unique random kindom cards
-		int randomKingCard;
-		int amountKings = 0;
-		while(amountKings < 10) {
-			randomKingCard = (rand() % 20) + 7;
-
-			if(containsCard(kingdomCards, randomKingCard))
-			continue;
-
-			kingdomCards[amountKings] = randomKingCard;
-			amountKings = amountKings + 1;
-		}
-		printf("\n\n----------NEW TEST----------\n");
-		printf("Kingdom cards: ");
-		for(i = 0; i < 10; i++) {
-			printf("%d ", kingdomCards[i]);
-		}
-		printf("\n");
-
-
-		//get 2-4 random players
-		int amountPlayers = rand() % 3;
-		amountPlayers = amountPlayers + 2;
-		printf("Amount players: %d\n", amountPlayers);
-
-
-		newGame();
-		//initialize the game
 		struct gameState state;
-		struct gameState *g = &state;
-		int players[g->numPlayers];
-		int seed = rand();		//pick random seed
-		printf("Random seed: %d\n", seed);
-		int returnValue = initializeGame(amountPlayers, kingdomCards, seed, &state);
-		//if failed to intialize game...
-		if (returnValue == -1) {
-			printf("failed to initialize game\n");
-			printf("Seed value: %d\n Amount players: %d\n", seed, amountPlayers);
-		}
 
+		initializeGame(totalPlayers, k, seed, &state);
 
-		//report supply counts
-		printf("Initial supply counts: ");
-		for(i = 0; i < (treasure_map+1); i++) {
-			printf("card %d : %d, ", i, state.supplyCount[i]);
-		}
+		char *readName[treasure_map+1] = {"curse","estate","duchy",
+			"province","copper","silver","gold","adventurer","councilroom",
+			"feast","gardens","mine","remodel","smithy","village","baron","greathall",
+			"minion","steward","tribute","ambassador","cutpurse","embargo","outpost",
+			"salvager","seahag","treasuremap"};
+
+		printf("Starting game; \n%i total players; \nKingdoms: ", totalPlayers);
+		
+		for (i = 0; i < 10; i++)
+		printf("%s ",readName[k[i]]);
 		printf("\n");
+		
+		//game loop
+		while(!isGameOver(&state)){
 
-		//play the game...
-		int totalTurns = 0;
-		while(!isGameOver(&state)) {
-			int currentPlayer = whoseTurn(&state);
-			printf("\n\nCurrent player: %d\n", currentPlayer);
+			printf("\nPlayer %i's turn-----------------\n",whoseTurn(&state)+1);
+			printf("Hand count: %i\n",state.handCount[whoseTurn(&state)]);
 
-			int randomAction;
-			int money = 0;
-			int amountAction = 0;
+			//action phase
+			int handCount = state.handCount[whoseTurn(&state)];
+			for (i = 0; i < handCount; i++){
+				int actCard = state.hand[whoseTurn(&state)][i];
+				if(actCard >= adventurer && actCard <= treasure_map){
 
-			for(i = 0; i < numHandCards(&state); i++) {
+					printf("%i tries %s from hand position %i\n",whoseTurn(&state)+1,readName[actCard],i);
+					returnVal = 0;
+					switch (actCard){
+					case adventurer:
+						returnVal = playCard(i,0,0,0,&state);
+					case gardens:
+						returnVal = playCard(i,0,0,0,&state);
+					case smithy:
+						returnVal = playCard(i,0,0,0,&state);
+					case village:
+						returnVal = playCard(i,0,0,0,&state);
+					case great_hall:
+						returnVal = playCard(i,0,0,0,&state);
+					case tribute:
+						returnVal = playCard(i,0,0,0,&state);
+					case cutpurse:
+						returnVal = playCard(i,0,0,0,&state);
+					case outpost:
+						returnVal = playCard(i,0,0,0,&state);
+					case sea_hag:
+						returnVal = playCard(i,0,0,0,&state);
+					case treasure_map:
+						returnVal = playCard(i,0,0,0,&state);
+					}
 
-
-				if(handCard(i, &state) == gold) {
-					money = money + 3;
-					printf("Playing gold card to calculate money\n");
-					playCard(i, -1, -1, -1, &state);
+					if (returnVal == -1)
+					;
+			//		printf("Can't play that card\n");
+					else {
+						printf("%s was played\n",readName[actCard]);
+						break;
+					}
 				}
-				else if(handCard(i, &state) == silver) {
-					money = money + 2;
-					printf("Playing silver card to calculate money\n");
-					playCard(i, -1, -1, -1, &state);
-				}
-				else if(handCard(i, &state) == copper) {
-					money = money + 1;
-					printf("Playing copper card to calculate money\n");
-					playCard(i, -1, -1, -1, &state);
-				}
-				else if(handCard(i, &state) >= 7)
-				amountAction++;
-
 			}
 
-			printf("Total money now: %d\n", money);
-			//if we have any action cards in hand...
-			if(amountAction > 0) {
-				//May randomly play ONE action card or not!
-				int randomVal =  rand() % numHandCards(&state);
-				randomAction = handCard(randomVal, &state);
+			//victory/money card
+			if (rand() % 10 == 1){
+				for (i = 6; i > 1; i--){
+					returnVal = buyCard(i, &state);
+				//	printf("%i attempts to buy: %s\n",whoseTurn(&state)+1,readName[i]);
 
-				if(randomAction >= 7) {
-					playCard(randomAction, -1, -1, -1, &state);
-					printf("Played: %d, Position: %d\n", randomAction, randomVal);
+					if (returnVal == -1)
+						;
+				//	printf("Purchase did not go through\n");
+					else{
+						printf("%s bought\n",readName[i]);
+						break;
+					}
 				}
-				else
-				printf("Decided not to play action card\n");
 			}
-			else
-			printf("No action cards in hand\n");
+			//kingdom card
+			else {
+				for (i = 0; i < 5; i++){
+					int j = rand() % 10;
+					returnVal = buyCard(k[j], &state);
+				//	printf("%i attempts to buy %s\n",whoseTurn(&state)+1,readName[k[j]]);
 
-			//randomly go into buy phase on a 50-50 chance
-			int playersChoice = rand() % 5;
-			int buyResult = 0;
-			int cardToBuy;
-			if(playersChoice != 4) {
-				//only buy a card if you can afford the one you want
-				cardToBuy = rand() % 27;
-				buyResult = buyCard(cardToBuy, &state);
+					if (returnVal == -1)
+						;
+				//	printf("Purchase failed\n");
+					else{
+						printf("Bought: %s\n",readName[k[j]]);
+						break;
+					}
+				}
 			}
-			if(buyResult != (-1)) {
-				printf("Bought card: %d\n", cardToBuy);
-			}
-			else
-			printf("Decided not to buy this turn\n");
-
-			printf("Discard count: %d\n", state.discardCount[currentPlayer]);
-			printf("Deck count: %d\n", state.discardCount[currentPlayer]);
-			printf("Cards in hand: %d\n", numHandCards(&state));
-			totalTurns = totalTurns + 1;
+			printf("\nGamestate values--\n");
+			printf("coins: %i\n",state.coins);
+			printf("numBuys: %i\n",state.numBuys);
+			printf("handCount: %i\n",state.handCount[whoseTurn(&state)]);
+			printf("deckCount: %i\n",state.deckCount[whoseTurn(&state)]);
+			printf("handCount: %i\n",state.discardCount[whoseTurn(&state)]);
+			printf("playedCardCount: %i\n",state.playedCardCount);
+			//printf("outpostsPlayed: %i\n",state.outpostPlayed);
+			shuffle(whoseTurn(&state),&state);
 			endTurn(&state);
 		}
 
-		printf("Total turns of all players: %d \n", totalTurns);
-		for(i = 0; i < amountPlayers; i++) {
-			printf("Player %d ended with score %d\n", i, scoreFor(i, &state));
+		// Print the players' scores
+		for(i = 0; i < totalPlayers; i++){
+			printf("%i's score: %i\n",i+1,scoreFor(i, &state));
 		}
-		getWinners(players,&state);
-		printf("Test complete\n");
 
+		// Print the winners
+		int w[MAX_PLAYERS];
+		getWinners(w, &state);
+		printf("winners as determined by getWinners(): ");
+		for (i = 0; i < totalPlayers; i++){
+			if (w[i] == 1)
+			printf("%i ", i+1);
+		}
+		printf("\n");
 	}
+
 	return 0;
+
 }
