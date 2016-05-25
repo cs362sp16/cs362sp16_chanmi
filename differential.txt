@@ -1,0 +1,19 @@
+I used Krisna Irawan's dominion.c for differential testing.
+My testdominion.c works perfectly fine with my dominion.c. I get 60%+ coverage with just 2 runs and with 20 or so I hit 70%.
+
+File 'dominion.c'
+Lines executed:62.82% of 581
+Creating 'dominion.c.gcov'
+
+When I try running my testdom with anyone elses, it doesn't work. Usually there will be an error somewhere in the running process.
+With Krisna's I can get a few turns in before it freezes on a village card. I've already spent hours on this issue and I can't fix it.
+My diffdominion script should run just fine, but it doesn't get past running his executable dominion and the only reason I know 
+ it gets to village is because I had to manually run the executable myself.
+I tried to manually differentiate but window's command prompt's buffer size wouldn't show me the rest of the history.
+Piping the output did nothing for some reason so that didn't work either.
+
+Anyways, the main difference I could see was that village crashed on his but not on mine. His is not correct because it freezes when mines works fine.
+That does not mean mines is correct either since it is most likely his is the same as mine because I don't think he changed his,
+and I didn't really change mine. So no, it's not easy to decide. Also because they are both really similar I can say with confidence
+ that the coverages would be really close. This is not the most ideal case for differential testing because my testdom isn't really
+  compatible and dominion.c already does some weird stuff that would most likely be seen in both test cases.

@@ -16,10 +16,8 @@ player: player.c interface.o
 	gcc -o player player.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	
 test:  dominion.o rngs.o  player.c interface.o
-	rm -f testdom.out
-	gcc -o testdom testdominion.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	./testdom 42 >> testdom.out
-	gcov -f dominion.c | less >> testdom.out
+	gcc -o testdominion testdominion.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	gcov -f dominion.c >> test1.out
 	
 unittest:
 	gcc -o test1 unittest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
@@ -87,7 +85,7 @@ unittestresults.out: unittest playdom
 	echo "GCOV AFTER CARD 4" >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
 	
-all: playdom player
+all: playdom player test
 
 clean:
 	rm -f *.o *.out playdom.exe playdom test.exe test player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 player.exe testInit testInit.exe *.gcov *.gcda *.gcno *.so *.a *.dSYM *.exe

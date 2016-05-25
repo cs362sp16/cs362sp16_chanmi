@@ -109,8 +109,8 @@ int main(int argc, char** argv){
 				//	printf("%i attempts to buy: %s\n",whoseTurn(&state)+1,readName[i]);
 
 					if (returnVal == -1)
-						;
-				//	printf("Purchase did not go through\n");
+						//;
+					printf("Purchase did not go through\n");
 					else{
 						printf("%s bought\n",readName[i]);
 						break;

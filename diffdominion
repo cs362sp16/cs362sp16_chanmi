@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+if [ $# -ne 3 ]
+then
+  echo Usage:
+  echo -e "diffdominion directory1 directory2 randomseed"
+  exit -1
+fi
+
+pwdVar=`pwd`
+
+make test
+./testdominion $3 >> test1.out
+
+cd $2
+make test
+./testdominion $3 >> test2.out
+mv test2.out $pwdVar
+
+DIFF=diff ./testdominion.out ./testdominion_ref.out
+
+echo
+if [ $DIFF == "" ]
+then
+  echo TEST PASSED
+else
+  echo TEST FAILED
+fi
