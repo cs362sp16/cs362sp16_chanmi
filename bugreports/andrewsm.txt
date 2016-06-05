@@ -1,0 +1,17 @@
+Lines in question:
+
+void card_smithy(int currentPlayer, struct gameState *state, int handPos)
+{
+	int i;
+
+	//+3 Cards
+	for (i = 0; i < 3; i++)
+	{
+		drawCard(currentPlayer, state);
+	}
+			
+	
+}
+
+Smithy adds three cards into the hand, but the error here is that smithy doesn't get discarded.
+That means it could be played more than it should be. Adding a discard outside the for loop would fix this.

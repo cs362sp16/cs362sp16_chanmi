@@ -1,0 +1,17 @@
+lines in question:
+
+void card_greathall(int currentPlayer, struct gameState *state, int handPos)
+{
+	//+1 Card
+	drawCard(currentPlayer, state);
+			
+	//+1 Actions
+	state->numActions++;
+			
+	//discard card from hand
+	discardCard(handPos, currentPlayer, state, 0);
+}
+
+Using my card testers and my eyes I could see that the village card definitely did not function properly.
+It would set numActions to numActions - 2, which is the opposite of what village does.
+Setting the minus to be a plus would fix this.

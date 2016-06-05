@@ -1,0 +1,16 @@
+Using my cardtester I could see that village wasn't adding one action.
+
+His function:
+int village_function(struct gameState *state, int currentPlayer, int handPos){
+    drawCard(currentPlayer, state);
+
+    state->numActions = state->numActions + 3;
+
+    discardCard(handPos, currentPlayer, state, 0);
+
+    return 0;
+}
+
+
+
+It seems that it adds an extra action, which sets off my assert. I think the numActions should be add two and not three.
