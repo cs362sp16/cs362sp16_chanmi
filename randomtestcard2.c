@@ -58,6 +58,7 @@ int main(int argc, char* argv[]) {
 			
 			myassert(numHandCards(&state),beforeHand,"didnt add one card",i);	//played one card and got one, so it should be equal
 			myassert(state.numActions,acts+1,"didnt add one action",i);
+			myassert(state.numActions,acts+2,"actions added should be 2",i);
 			myassert(r, 0, "return value fail", i);
 			
 			endTurn(&state);

@@ -5,6 +5,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+//mine
+
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
     return 1;
@@ -753,7 +755,7 @@ int gHallCard(int currentPlayer, struct gameState *state, int handPos){
       state->numActions++;
 			
       //discard card from hand
-      discardCard(handPos, currentPlayer, state, 1);
+      discardCard(handPos, currentPlayer, state, 0);
       return 0;
 
 

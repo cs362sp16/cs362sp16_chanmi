@@ -1,0 +1,27 @@
+While running and messing with gdb for my card and random testers, I noticed that discard would sometimes act weird.
+Gdb was only good for tracking variables using print, but this discard bug was not bad enough to create a fault or memory leak.
+I pin pointed the issue with discardCard(). One of the parameters is something called "trashFlag", which moves cards to the "played" pile.
+
+Here's that section of discardCard():
+  if (trashFlag < 1)
+    {
+      //add card to played pile
+      state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos]; 
+      state->playedCardCount++;
+    }
+	
+
+Great hall was supposed to call discardCard with the flag set to 0, but for some reason it was set to one. This is not a gamebreaking bug,
+but it should definitely be fixed, otherwise the played cards would get cards it shouldn't have.
+I also ran into a seg fault bug that only manifested when gdb was run with the executable, but due to my lack of experience with gdb I couldn't diagnose the issue.
+I only knew the seg fault showed up when cardEffect was called on line 820. Using the "info local" command I could look at the variables in the current scope, but they all seemed fine.
+However, I had already figured that running cardEffect with no treasures would break the function, due to my unit tester's asserts pointing this out.
+
+Agan's rules:
+1: READ THE MANUAL
+	I had to understand how the great hall card and discardCard() worked to be able to know something was broken.
+2: MAKE IT FAIL
+	Randomtestadventurer would only fail when run with GDB so I figured that out quickly. It was reproducable on all the dominion.c's that I tried.
+6: KEEP AND AUDIT TRAIL
+	I had to keep in mind that for all the issues I encountered, the phrase "discard" was in most of them.
+	
