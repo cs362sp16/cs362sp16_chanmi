@@ -15,8 +15,9 @@ interface.o: interface.h interface.c
 player: player.c interface.o
 	gcc -o player player.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	
-test:  dominion.o rngs.o  player.c interface.o
+test: playdom dominion.o interface.o
 	gcc -o testdominion testdominion.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	./testdominion
 	gcov -f dominion.c >> test1.out
 	
 unittest:
@@ -27,23 +28,31 @@ unittest:
 	gcc -o card1 cardtest1.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	gcc -o card2 cardtest2.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	gcc -o card3 cardtest3.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	gcc -o card4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)	
+	#gcc -o card4 cardtest4.c -g dominion.o rngs.o interface.o $(CFLAGS)	
 	
 randomtests: dominion.o rngs.o interface.o
-	gcc -o randomtestadventurer randomtestadventurer.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	./randomtestadventurer 42 >> randomtestadventurer.out
-	gcov -f dominion.c | less >> randomtestadventurer.out
+	#gcc -o randomtestadventurer randomtestadventurer.c -g dominion.o rngs.o interface.o $(CFLAGS)
+	#./randomtestadventurer 2 >> randomtestadventurer.out
+	#gcov -f dominion.c | less >> randomtestadventurer.out
 
 	echo "SMITHY TEST CARD" >> randomtestcard1.out
 	gcc -o randomtestcard1 randomtestcard1.c -g dominion.o rngs.o interface.o $(CFLAGS)
 	./randomtestcard1 42 >> randomtestcard1.out
-	gcov -f dominion.c | less >> randomtestcard1.out	
+	#gcov -f dominion.c | less >> randomtestcard1.out	
 
 	echo "VILLAGE TEST CARD" >> randomtestcard2.out
-	gcc -o randomtestcard2 randomtestcard2.c -g dominion.o rngs.o interface.o $(CFLAGS)
-	./randomtestcard2 42 >> randomtestcard2.out
-	gcov -f dominion.c | less >> randomtestcard2.out		
-		
+##	gcc -o randomtestcard2 randomtestcard2.c -g dominion.o rngs.o interface.o $(CFLAGS)
+#	./randomtestcard2 42 >> randomtestcard2.out
+#	gcov -f dominion.c | less >> randomtestcard2.out		
+	
+tart: dominion.o rngs.o interface.o	
+	gcc -o villatest villatest.c -g dominion.o rngs.o interface.o $(CFLAGS)	
+	./villatest 
+	gcov dominion.c >> passedfile.txt
+
+tarantula:
+	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c tarantula.c rngs.c -o tarantula -lm -g
+	
 unittestresults.out: unittest playdom
 	rm -rf unittestresults.out
 	./test1 >> unittestresults.out

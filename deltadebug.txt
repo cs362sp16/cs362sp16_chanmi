@@ -1,0 +1,22 @@
+Relevant files: GCCDD.py, DD.pyc, MyDD.py, DD.py
+
+Alex brought a interesting delta debugging site to my attention in lecture:
+https://www.st.cs.uni-saarland.de/dd/ddusage.php3
+
+I found it again by googling "delta debugging tutorial".
+
+The general pattern to set up delta debugging is:
+1. Identify the test cases
+2. Identify the deltas
+3. Set up a Delta debugging framework
+5. Invoke delta debugging
+
+All the python scripts needed are on the website and I just downloaded them from there but changed bug.c to my smithy tester.
+The script tries to isolate differences by changing individual characters.
+
+In the example provided, the "trivial" test case would be the passing one and my smithy cardtest1 would be the failing.
+Using the "dd" for isolating failure inducing differences with GCCDD.py, the script finished with this statement:
+dd: done
+The 1-minimal failure-inducing difference is [(474, '('), (475, '2'), (484, '&'), (485, 'g'), (486, ')'), (487, ';')]
+
+The rest of the output can be seen in delta.out, which is GCCDD.py piped.
